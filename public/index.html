@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Iframe as a Shell</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+function sendMessageToIframe() { 
+    //window.onload = function () {
+        console.log("Sending Message from Mural Shell");
+        var iframeWin1 = document.getElementById("microapp1").contentWindow;
+        var iframeWin2 = document.getElementById("microapp2").contentWindow;
+        var patientName = $("#usr").val()
+        iframeWin1.postMessage(patientName, "*");
+        iframeWin2.postMessage(patientName, "*");
+    //}
+}
+
+$(document).ready(function(){
+  console.log("Jquery loaded");
+  setTimeout(function(){ 
+    console.log("In settimeou function");
+    sendMessageToIframe();
+   }, 5000);
+});
+</script>
+<style type = "text/css"> 
+    body {
+        margin: 15px;
+    }
+</style>
+</head>
+<body>
+
+<h1>MURAL SHELL</h1>
+<br>
+<form>
+        <label for="usr">Patient Name:</label>
+        <input type="text" id="usr" value="Vishwa">
+        <br>
+        <br>
+        <button type="button" class="btn btn-primary" onclick="sendMessageToIframe()">Change Patient</button>
+        <br>
+        <br>
+        <br>
+</form>
+
+<iframe id="microapp1" width="45%" height="300px" src="http://localhost:3001"></iframe>
+<iframe id="microapp2" width="45%" height="300px" src="http://localhost:3002"></iframe>
+
+</body>
+</html>
